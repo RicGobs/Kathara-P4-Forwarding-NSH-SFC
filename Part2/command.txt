@@ -1,0 +1,13 @@
+tcpdump -w shared/s1_eth0.pcap
+
+tcpdump -i eth1 -w shared/s1_eth1.pcap
+
+tcpdump -w shared/s2.pcap
+
+tcpdump -w shared/s3.pcap
+
+tcpdump -w shared/s4.pcap
+
+tcpdump -w shared/s5_eth0.pcap
+
+tcpdump -i eth1 -w shared/s5_eth1.pcap
