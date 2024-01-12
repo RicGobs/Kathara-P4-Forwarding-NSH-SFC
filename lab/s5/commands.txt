@@ -1,0 +1,3 @@
+table_add MyIngress.myTunnel_exact remove_myTunnel_header 35 =>
+table_add MyIngress.myNSH_exact remove_myNSH_header 100 1 => 2
+table_add MyIngress.ipv4_lpm ipv4_forward 10.0.0.1 => 1

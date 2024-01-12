@@ -1,2 +1,0 @@
-table_add MyIngress.myTunnel_exact myTunnel_forward 35 => 2
-table_add MyIngress.ipv4_lpm ipv4_forward 10.0.0.1 => 1
