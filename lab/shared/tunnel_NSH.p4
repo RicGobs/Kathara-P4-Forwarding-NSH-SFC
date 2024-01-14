@@ -45,16 +45,11 @@ header myTunnel_t {
 //     |                                                               |
 //     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-// Because I can develop the NSH header by my own.
+// I can develop the NSH header by my own.
 // So I remove all the fields not usefull for me
 
 // my NSH header -> total 40 bits (I have been able to eliminate some bits)
 header myNSH_t{
-
-    // removed after our email, I have understood that are not needed
-    // bit<2> version;     // NSH version
-    // bit<6> ttl;         // Time to Live
-
     bit<8> proto_id;    // next protocol identifier
     bit<24> SPI;        // NSH Service Path Identifier
     bit<8> SI;          // NSH Service Index
@@ -118,7 +113,7 @@ parser MyParser(packet_in packet,
         packet.extract(hdr.myTunnel);
         transition select(hdr.myTunnel.proto_id) {
             TYPE_NSH: parse_myNSH;
-            TYPE_IPV4: parse_ipv4; // in my case not happens, but to allow architecture change
+            TYPE_IPV4: parse_ipv4; 
             default : accept;
         }
     }
@@ -188,10 +183,6 @@ control MyIngress(inout headers hdr,
 
         hdr.myNSH.setValid();
 
-        // removed after our email, I have understood that are not needed, I believe it is correct
-        // hdr.myNSH.version = 0x0; // It MUST be set to 0x0 by the sender
-        //hdr.myNSH.ttl = 63; // default initial TTL value
-
         hdr.ethernet.etherType = TYPE_NSH; // QUESTO MANCAVA
         hdr.myNSH.proto_id = TYPE_IPV4_for_NSH;
         hdr.myNSH.SPI = spi;
@@ -228,10 +219,6 @@ control MyIngress(inout headers hdr,
     action myNSH_forward(egressSpec_t port, bit<16> new_tunnel_id) {
         // hdr.myNSH.SPI remains 200
         hdr.myNSH.SI = hdr.myNSH.SI - 1;
-
-        // removed after our email, I have understood that are not needed, I believe it is correct
-        // Each SFF involved in forwarding an NSH packet must decrement the TTL value by 1
-        //hdr.myNSH.ttl = hdr.myNSH.ttl - 1;
 
         hdr.myTunnel.setValid();
 
