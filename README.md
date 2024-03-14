@@ -34,27 +34,27 @@ In the Lab folder, it is possible to look at the implementation of the situation
   - Sends a packet to h2.
 
 - **s1 (Service Classifier):**
-  1. Receives the packet.
-  2. Using the destination IP address as a key, adds the NSH header with SPI/SI (100 2).
-  3. Using SPI/SI (100 2) as a key, encapsulates the packet in the tunnel header with ID 13 and forwards it to port 2.
+  - Receives the packet.
+  - Using the destination IP address as a key, adds the NSH header with SPI/SI (100 2).
+  - Using SPI/SI (100 2) as a key, encapsulates the packet in the tunnel header with ID 13 and forwards it to port 2.
 
 - **s2:**
-  1. Receives the packet.
-  2. Using the tunnel ID (13) as a key, forwards it to port 2.
+  - Receives the packet.
+  - Using the tunnel ID (13) as a key, forwards it to port 2.
 
 - **s3 (1st Service Function Forwarder):**
-  1. Receives the packet.
-  2. Using the tunnel ID (13) as a key, removes the tunnel header.
-  3. Using SPI/SI (100 2) as a key, decrements SI by 1, encapsulates in the tunnel header with ID 35, and forwards it to port 2.
+  - Receives the packet.
+  - Using the tunnel ID (13) as a key, removes the tunnel header.
+  - Using SPI/SI (100 2) as a key, decrements SI by 1, encapsulates in the tunnel header with ID 35, and forwards it to port 2.
 
 - **s4:**
-  1. Receives the packet.
-  2. Using the tunnel ID (35) as a key, forwards it to port 2.
+  - Receives the packet.
+  - Using the tunnel ID (35) as a key, forwards it to port 2.
 
 - **s5 (2nd Service Function Forwarder):**
-  1. Receives the packet.
-  2. Using the tunnel ID (35) as a key, removes the tunnel header.
-  3. Using SPI/SI (100 1) as a key, decrements SI by 1, removes the NSH header, forwards it to port 2, and decrements the TTL of IPv4.
+  - Receives the packet.
+  - Using the tunnel ID (35) as a key, removes the tunnel header.
+  - Using SPI/SI (100 1) as a key, decrements SI by 1, removes the NSH header, forwards it to port 2, and decrements the TTL of IPv4.
 
 - **h2 (Host 2):**
   - Receives the packet.
